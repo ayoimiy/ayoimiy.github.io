@@ -1,7 +1,12 @@
 source "https://rubygems.org"
 
-# 推荐使用与 GitHub Pages 环境完全一致的 gem 集
-gem "github-pages", group: :jekyll_plugins
+gem "jekyll", "~> 4.3"
+gem "liquid", ">= 4.0.4"
+gem "jekyll-remote-theme"   # 因为你在 _config.yml 中用了 remote_theme
+gem "jekyll-include-cache"  # Minimal Mistakes 可能需要
+gem "jekyll-paginate"
+gem "jekyll-sitemap"
+gem "jekyll-feed"
+gem "jemoji"
+gem "jekyll-gist"
 
-# 为了支持 Remote Theme 方法需要添加的插件
-gem "jekyll-include-cache"

@@ -29,6 +29,7 @@ plugins:
   - jekyll-gist                # 嵌入 GitHub Gist
   - jekyll-feed                # 生成 RSS feed
   - jemoji                     # 支持 GitHub 风格的 Emoji
+  - jekyll-remote-theme
 
 paginate: 5                    # 每页显示的文章数
 paginate_path: /page:num/      # 分页页面的路径
@@ -77,10 +78,10 @@ defaults:
 # 第六步：作者与社交信息 (Author & Social Links) (可选)
 # ==============================================
 author:
-  name: "你的名字"
+  name: "ayoimiy"
   avatar: "/assets/images/avatar.jpg" # 头像图片路径
-  bio: "你的简短个人介绍"
-  location: "你所在的城市"
+  bio: "这是一个简介"
+  location: "2号平行世界"
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
