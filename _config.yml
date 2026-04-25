@@ -17,7 +17,7 @@ name: "你的名字"               # 网站作者或拥有者名称
 description: "你的博客描述"     # 用于 SEO 的网站描述
 url: "https://ayoimiy.github.io" # 你的博客域名 (重要，需替换)
 baseurl: ""                   # 你的博客在根目录下，这里留空
-repository: "/你的用户名.github.io" # 你的 GitHub 仓库地址 (重要，需替换)
+repository: "/ayoimiy.github.io" # 你的 GitHub 仓库地址 (重要，需替换)
 
 # ==============================================
 # 第三步：插件与构建 (Plugins & Build)
