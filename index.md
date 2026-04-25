@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: home
 title: 首页
 ---
 # 欢迎来到我的算法博客
