@@ -1,6 +1,6 @@
 ---
-layout:default
-title:首页
+layout: default
+title: 首页
 ---
 # 欢迎来到我的算法博客
 这里记录我学习的实现的各种算法？
