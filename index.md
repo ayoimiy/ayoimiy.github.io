@@ -1,17 +1,105 @@
----
-layout: default
-title: 首页
----
-# 欢迎来到我的算法博客
-这里记录我学习的实现的各种算法？
+# ==============================================
+# 第一步：指定主题与皮肤 (Theme & Skin)
+# ==============================================
+# 指定使用 Minimal Mistakes 主题 (GitHub Pages 专用方式)
+remote_theme: "mmistakes/minimal-mistakes@4.26.2"
+# 选择皮肤 (默认: "default")
+# 可选: "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+minimal_mistakes_skin: "air"
 
-## 最新文章
+# ==============================================
+# 第二步：网站基本信息 (Site Settings)
+# ==============================================
+title: "你的博客标题"          # 网站主标题，出现在浏览器标签和导航栏
+title_separator: "-"          # 页面标题和网站标题之间的分隔符
+subtitle: "你的博客副标题"      # 副标题，显示在网站主标题下方 (可选)
+name: "你的名字"               # 网站作者或拥有者名称
+description: "你的博客描述"     # 用于 SEO 的网站描述
+url: "https://ayoimiy.github.io" # 你的博客域名 (重要，需替换)
+baseurl: ""                   # 你的博客在根目录下，这里留空
+repository: "ayoimiy/ayoimiy.github.io" # 你的 GitHub 仓库地址 (重要，需替换)
 
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      <span style="font-size:0.8em; color:#666;"> – {{ post.date | date: "%Y-%m-%d" }}</span>
-    </li>
-  {% endfor %}
-</ul>
+# ==============================================
+# 第三步：插件与构建 (Plugins & Build)
+# ==============================================
+plugins:
+  - jekyll-include-cache       # Remote Theme 必需的插件
+  - jekyll-paginate            # 文章分页
+  - jekyll-sitemap             # 生成站点地图
+  - jekyll-gist                # 嵌入 GitHub Gist
+  - jekyll-feed                # 生成 RSS feed
+  - jemoji                     # 支持 GitHub 风格的 Emoji
+
+paginate: 5                    # 每页显示的文章数
+paginate_path: /page:num/      # 分页页面的路径
+
+# ==============================================
+# 第四步：评论与数据分析 (Comments & Analytics) (可选)
+# ==============================================
+# 评论系统 (推荐: giscus)
+# 具体配置方法比较复杂，建议暂时不填，等博客跑通后再研究
+# comments:
+#   provider: "giscus"
+#   giscus:
+#     repo_id: "你的repo_id"
+#     ...
+
+# Google Analytics 追踪 ID
+# analytics:
+#   provider: "google-gtag"
+#   google:
+#     tracking_id: "你的G-XXXXXXXXXX"
+
+# ==============================================
+# 第五步：默认页面设置 (Default Front Matter)
+# ==============================================
+defaults:
+  # _posts 目录下的文章默认设置
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+  # _pages 目录下的页面默认设置
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+
+# ==============================================
+# 第六步：作者与社交信息 (Author & Social Links) (可选)
+# ==============================================
+author:
+  name: "你的名字"
+  avatar: "/assets/images/avatar.jpg" # 头像图片路径
+  bio: "你的简短个人介绍"
+  location: "你所在的城市"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/ayoimiy"
+    # 更多链接可以参考官方文档添加
+    # - label: "Twitter"
+    #   icon: "fab fa-fw fa-twitter-square"
+    #   url: "https://twitter.com/"
+
+# 社交分享链接 (分享到哪些平台)
+social:
+  type: "Person"
+  name: "你的名字"
+  links:
+    - "https://github.com/ayoimiy"
+
+# 页脚版权信息
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/ayoimiy"
