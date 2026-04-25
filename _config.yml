@@ -10,14 +10,14 @@ minimal_mistakes_skin: "air"
 # ==============================================
 # 第二步：网站基本信息 (Site Settings)
 # ==============================================
-title: "你的博客标题"          # 网站主标题，出现在浏览器标签和导航栏
+title: "算法"          # 网站主标题，出现在浏览器标签和导航栏
 title_separator: "-"          # 页面标题和网站标题之间的分隔符
-subtitle: "你的博客副标题"      # 副标题，显示在网站主标题下方 (可选)
-name: "你的名字"               # 网站作者或拥有者名称
-description: "你的博客描述"     # 用于 SEO 的网站描述
+subtitle: "这是一个副标题"      # 副标题，显示在网站主标题下方 (可选)
+name: "ayoimiy"               # 网站作者或拥有者名称
+description: "描述被哈米斯吃了"     # 用于 SEO 的网站描述
 url: "https://ayoimiy.github.io" # 你的博客域名 (重要，需替换)
 baseurl: ""                   # 你的博客在根目录下，这里留空
-repository: "/ayoimiy.github.io" # 你的 GitHub 仓库地址 (重要，需替换)
+repository: "ayoimiy.github.io" # 你的 GitHub 仓库地址 (重要，需替换)
 
 # ==============================================
 # 第三步：插件与构建 (Plugins & Build)
