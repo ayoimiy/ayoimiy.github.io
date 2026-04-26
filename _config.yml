@@ -30,9 +30,15 @@ plugins:
   - jekyll-feed                # 生成 RSS feed
   - jemoji                     # 支持 GitHub 风格的 Emoji
   - jekyll-remote-theme
+  - jekyll-archives
+  # - jekyll-toc
+  - jekyll-numbered-headings
+
 
 paginate: 5                    # 每页显示的文章数
 paginate_path: /page:num/      # 分页页面的路径
+
+
 
 # ==============================================
 # 第四步：评论与数据分析 (Comments & Analytics) (可选)
@@ -64,8 +70,10 @@ defaults:
       author_profile: true
       read_time: true
       comments: true
-      share: true
+      share: false
       related: true
+      toc: true
+      # toc_sticky: true
   # _pages 目录下的页面默认设置
   - scope:
       path: "_pages"
@@ -104,3 +112,14 @@ footer:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/ayoimiy"
+
+jekyll-archives:
+  enabled:
+    - categories
+    - tags
+  layouts:
+    category: archive-taxonomy
+    tag: archive-taxonomy
+  permalinks:
+    category: /categories/:name/   #归档页面的访问地址
+    tag: /tags/:name/

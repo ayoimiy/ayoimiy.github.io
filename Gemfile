@@ -9,4 +9,6 @@ gem "jekyll-sitemap"
 gem "jekyll-feed"
 gem "jemoji"
 gem "jekyll-gist"
-
+gem 'jekyll-archives'
+# gem 'jekyll-toc'
+gem 'jekyll-numbered-headings'

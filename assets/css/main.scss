@@ -1,0 +1,373 @@
+---
+---
+@import "minimal-mistakes";
+
+/* ========================
+   全局样式：浅灰背景
+   ======================== */
+html, body {
+  background-color: #f0f2f5 !important;
+}
+
+.masthead,
+.masthead__menu,
+.greedy-nav {
+  background-color: #f0f2f5 !important;
+}
+.masthead {
+  border-bottom: 2px solid #e0e4e8;
+}
+/* ========================
+   侧边栏卡片样式（白色、圆角、阴影）
+   ======================== */
+.sidebar .h-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.02);
+  padding: 0.8rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #eef2f5;
+  transition: none; /* 没有任何悬浮动画 */
+}
+
+/* ========================
+   头像和名字居中
+   ======================== */
+.author__avatar {
+  display: flex;
+  justify-content: center;
+}
+.author__name {
+  text-align: center;
+  font-size: 0.9;
+}
+.author__bio {
+  font-size: 1.0rem;            /* 简介文字缩小 */
+}
+.author__avatar img {
+  max-width: 120px;               /* 限制最大宽度，默认可能 100px */
+  width: 70%;
+}
+/* ========================
+   统计卡片（文章、标签、分类）
+   ======================== */
+.author-profile__stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.author-profile__stat {
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  display: block;             /* 使整个区域可点击 */
+  padding: 0.5rem;
+  border-radius: 8px;         /* 预览区域圆角，鼠标悬浮时背景变化可见 */
+  transition: background 0.1s ease;
+}
+
+.author-profile__stat:hover {
+  color: #208452;  /* 可替换为任何你喜欢的颜色，例如 #2c3e50 或 #e74c3c */
+}
+.author-profile__stat:hover .author-profile__stat-label,
+.author-profile__stat:hover .author-profile__stat-number {
+  color: #318f1f;  /* 确保标签和数字也变色（如果它们原本有独立颜色） */
+}
+
+.author-profile__stat-label {
+  display: block;
+  font-size: 0.7rem;
+  color: #666;
+}
+
+.author-profile__stat-number {
+  display: block;
+  font-size: 0.8rem;          /* 稍大一点，更醒目 */
+  font-weight: bold;
+  color: #333;
+  margin-top: 6px;
+}
+// 缩小社交链接的图标和字体
+.author__urls-wrapper .social-icons li {
+  font-size: 0.75rem;
+}
+.author__urls-wrapper .social-icons i {
+  font-size: 0.8rem;             /* 图标大小 */
+}
+
+
+/* ========================
+   头像弹跳动画
+   ======================== */
+@keyframes avatarBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+.avatar-pop {
+  animation: avatarBounce 0.2s ease-in-out;
+}
+#avatar-img {
+  cursor: pointer;
+}
+
+/* ========================
+   侧边栏右浮动布局
+   ======================== */
+/* ===============================
+   最终正确布局：利用 #main 实现内容区+侧边栏并排
+   =============================== */
+#main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;      // 整体在页面中居中
+  max-width: 1400px;
+  margin: 2rem auto 0;          // 上边距舒适，左右自动居中
+  padding: 0 0 0 2rem;
+  gap: 1rem;                    // 内容与侧边栏之间的间距（替代 margin-right）
+  align-items: flex-start;      // 关键：让 sticky 子项能正常粘附
+}
+
+/* 内容区先显示在左侧（源码顺序侧边栏在前，我们用 order 调整） */
+article.page {
+  box-sizing: border-box;
+  flex: 1 1 auto;            // 基于内容自动宽度，并可伸缩
+  width: 100%;               // 防止内容过少时不撑开
+  min-width: 0;
+  max-width: 800px;
+  order: 1;
+  margin: 0;
+  // 卡片样式
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.02);
+  border: 1px solid #eef2f5;
+  padding: 2rem;             // 现在安全了
+}
+
+.sidebar {
+  flex: 0 0 280px;
+  order: 2;
+  margin: 0;
+  padding: 0;
+  float: none !important;
+  width: auto !important;
+  position: sticky;
+  top: 2rem;
+  // 强制清除可能来自主题的滚动限制
+  overflow-y: visible !important;
+  max-height: none !important;
+}
+
+// 同时清除主题对 sticky 的默认设置
+.sidebar.sticky {
+  overflow-y: visible !important;
+  max-height: none !important;
+}
+
+/* 隐藏主题原生的右侧目录框（不影响自定义侧边栏） */
+.sidebar__right {
+  display: none !important;
+}
+/* ========================
+   强制侧边栏完全不透明（已确保无半透效果）
+   ======================== */
+.sidebar,
+.sidebar.sticky,
+.sidebar .h-card,
+.sidebar * {
+  opacity: 1 !important;
+}
+
+/* 修改站点标题颜色 */
+.site-title {
+  color: #2c3e50 !important;
+}
+
+/* 修改副标题颜色 */
+.site-subtitle {
+  color: #7f8c8d !important;
+}
+
+// /* 修改导航链接颜色 */
+// .masthead__menu-item a {
+//   color: #3498db !important;
+// }
+
+/* 修改导航链接悬浮颜色 */
+.masthead__menu-item a:hover {
+  color: #1abc9c !important;
+}
+
+/* 隐藏主题原生的目录框 */
+.sidebar__right {
+  display: none !important;
+}
+
+
+/* 目录卡片内部列表样式优化 */
+.toc-card .toc {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.toc-card .toc li {
+  margin: 0.2rem 0;
+  padding: 0;
+}
+
+.toc-card .toc li a:hover {
+  color: #208452;
+}
+
+.toc-card__content .toc__menu li a {
+  font-size: 1.0rem;
+  text-decoration: none;
+}
+
+
+/* 可选的目录标题“目录”样式 */
+.toc-card__header {
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  // border-bottom: 1px solid #eef2f5;
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.6rem;
+}
+
+/* 目录卡片多级编号样式
+    该项导致多一个0.
+*/
+// .toc-card__content {
+//   counter-reset: toc-item;
+// }
+
+// .toc-card__content ol {
+//   list-style: none;          /* 隐藏默认的数字或圆点 */
+//   padding-left: 0;
+//   counter-reset: toc-item;
+// }
+
+// .toc-card__content li {
+//   counter-increment: toc-item;
+//   font-size: 1.0rem;
+//   color: #333;
+//   transition: color 0.2s ease;
+//   // text-decoration: none;
+// }
+// .toc-card__content li a {
+//   color: inherit;
+//   text-decoration: none;
+// }
+// .toc-card__content li::before {
+//   content: counters(toc-item, ".") ". ";   /* 用 "." 连接多级编号 */
+//   // font-weight: 600;
+//   color: gray;
+//   font-size: 1.0rem;
+// }
+// .toc-card__content a:hover {
+//     color: #208452;
+// }
+// .toc-card__content a{
+//     font-size: 1.0rem;
+//     text-decoration: none;
+//     color: inherit;
+// }
+// /* 如果目录中有嵌套的 ol，确保缩进正确 */
+// .toc-card__content ol ol {
+//   padding-left: 1.0em;
+// }
+
+/* ---------- 目录卡片样式（新） ---------- */
+.toc-card__content ol {
+  list-style: none;
+  padding-left: 0;
+}
+
+.toc-card__content li {
+  margin: 0.3em 0;
+}
+
+.toc-card__content a {
+  color: gray;
+  text-decoration: none;
+  transition: color 0.1s ease;
+  display: inline-block;    /* 让 a 包裹两个 span */
+  font-size: 1.0rem;
+}
+/* hover 效果：鼠标划过 a 时，序号和标题一起变绿 */
+.toc-card__content a:hover {
+  color: #208452;
+}
+/* 序号 */
+.toc-num {
+  font-weight: 300;
+  margin-right: 0.3em;
+}
+
+
+
+/* 嵌套缩进 */
+.toc-card__content ol ol {
+  padding-left: 1.5em;
+}
+
+/* 目录链接激活状态（当前阅读位置） */
+.toc-card__content a.active {
+  color: #208452 !important;          /* 可换成你喜欢的颜色 */
+  font-weight: 600;                   /* 可选：加粗强调 */
+}
+
+/* 如果激活状态同时被鼠标悬停，可以保留一点变化（比如去掉下划线） */
+.toc-card__content a.active:hover {
+  text-decoration: none;              /* 或者保留，随你 */
+}
+
+
+
+/* ===============================
+   防止文章内容溢出
+   =============================== */
+.page__content {
+  overflow-wrap: break-word;      // 长单词/链接强制换行
+  word-break: break-word;         // 兼容旧浏览器
+  hyphens: auto;                  // 英文断词（可选）
+}
+
+.page__content pre,
+.page__content code {
+  white-space: pre-wrap;          // 代码块允许换行，而不是出现横向滚动条
+  word-wrap: break-word;
+  overflow-x: auto;               // 如果仍然过长，出现内部滚动条（比撑破页面要好）
+}
+
+.page__content img,
+.page__content video,
+.page__content iframe,
+.page__content table {
+  max-width: 100%;
+  height: auto;
+}
+
+.page__content table {
+  display: block;                 // 让表格可滚动而不是撑宽
+  overflow-x: auto;
+}
+
+/* 目录折叠动画（可选） */
+.toc-sub-list {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease-in-out;
+}
+
+li:not(.toc-collapsed) > .toc-sub-list {
+  max-height: 2000px;   // 足够大即可
+}
