@@ -33,6 +33,27 @@ body {
   gap: 1rem;
   align-items: stretch;   /* 让侧边栏高度与内容区一致，保证 sticky 正常 */
 }
+/* ——— 首页文章列表 ——— */
+.archive {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  max-width: 800px;
+  order: 1;                      // 强制在左侧
+  margin: 0;
+  background: #ffffff;           // 可选：让首页也变成白卡片
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eef2f5;
+  padding: 2rem;
+}
+
+
+
+
+
+
 
 /* 文章内容卡片（左侧） */
 article.page {
@@ -317,4 +338,44 @@ article.page {
 .sidebar .h-card,
 .sidebar * {
   opacity: 1 !important;
+}
+
+
+
+
+
+
+
+
+/* ===================================
+   9. 移动端适配
+   =================================== */
+@media screen and (max-width: 768px) {
+  #main,
+  .initial-content {
+    flex-direction: column;          // 改为垂直排列
+    padding: 0 1rem;                 // 减少两侧留白
+    gap: 1rem;
+  }
+
+  article.page,
+  .archive {
+    max-width: 100%;                 // 内容区全宽
+    margin-right: 0;
+    order: 1;                        // 内容在上
+  }
+
+  .sidebar {
+    flex: 0 0 auto;                  // 取消固定宽度
+    width: 100% !important;
+    order: 2;                        // 侧边栏在下方
+    margin-top: 1rem;
+  }
+
+  /* 如果目录卡片粘性定位在小屏幕体验不佳，可以取消 */
+  .toc-card {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
 }
