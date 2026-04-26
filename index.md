@@ -21,6 +21,6 @@ classes: wide
 ### 📦 我的开源项目
 
 - [Noita Entity Lib](https://github.com/ayoimiy/noita-entity-lib) – 简化实体组件操作的 Lua 库
-- [Pathfinding in Lua](https://github.com/你的用户名/pathfinding) – 多种寻路算法实现
+
 
 更多内容请浏览 [分类](/categories/) 或 [标签](/tags/)。

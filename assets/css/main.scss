@@ -368,4 +368,17 @@ article.page {
     max-height: none;
     overflow-y: visible;
   }
+  /* 移动端头像与名字修正 */
+.author__avatar {
+  display: flex;
+  justify-content: center;          // 确保头像居中
+}
+.author__avatar img {
+  width: 100px;                     // 固定一个合适的大小
+  max-width: 50%;                   // 但不超过容器的一半
+  height: auto;
+}
+.author__name {
+  text-align: center;               // 名字居中
+}
 }
