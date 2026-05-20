@@ -382,3 +382,503 @@ article.page {
   text-align: center;               // 名字居中
 }
 }
+
+/* ===================================
+   10. 字体与排版
+   =================================== */
+body,
+.page__content,
+.archive {
+  font-family: "Noto Serif SC", "Source Han Serif SC", "STSong", "SimSun", "Songti SC", serif;
+  font-size: 16px;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+  color: #2c3e50;
+}
+
+.page__content h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #eef2f5;
+}
+
+.page__content h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin-top: 1.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.page__content h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.page__content h4, .page__content h5, .page__content h6 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.page__content p {
+  margin-bottom: 1rem;
+}
+
+.page__content a {
+  color: #1a7a4c;
+  text-decoration: none;
+  border-bottom: 1px solid #c8e6d8;
+  transition: border-color 0.15s ease;
+}
+
+.page__content a:hover {
+  border-bottom-color: #1a7a4c;
+}
+
+.page__content blockquote {
+  border-left: 4px solid #1abc9c;
+  background: #f8faf9;
+  padding: 0.8rem 1.2rem;
+  margin: 1.2rem 0;
+  border-radius: 0 8px 8px 0;
+  color: #555;
+}
+
+.page__content strong {
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* ===================================
+   11. 代码块增强
+   =================================== */
+
+/* 基础代码样式 */
+code {
+  font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", "Monaco", monospace !important;
+  font-size: 0.875rem;
+}
+
+/* 行内代码 */
+:not(pre) > code {
+  background: #f0f2f5;
+  color: #d63384;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+/* 代码块容器 */
+div.highlighter-rouge,
+figure.highlight {
+  margin: 1.2rem 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* 代码块 */
+pre.highlight {
+  position: relative;
+  background: #1e1e2e !important;   // Catppuccin Mocha base
+  border-radius: 10px;
+  padding: 1rem 0.8rem;
+  overflow-x: auto;
+}
+
+pre.highlight code {
+  color: #cdd6f4;
+  background: transparent;
+  white-space: pre;
+  display: block;
+}
+
+/* ——— 复制按钮 ——— */
+.code-copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 2;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-family: inherit;
+  background: rgba(255,255,255,0.1);
+  color: #cdd6f4;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease, background 0.15s ease;
+}
+
+pre.highlight:hover .code-copy-btn {
+  opacity: 1;
+}
+
+.code-copy-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* ——— 行号 ——— */
+pre.line-numbers {
+  counter-reset: line;
+  padding-left: 3.5rem;
+}
+
+.code-line {
+  display: block;
+  counter-increment: line;
+  min-height: 1.3em;
+}
+
+.code-line::before {
+  content: counter(line);
+  display: inline-block;
+  width: 2.4rem;
+  margin-left: -3rem;
+  margin-right: 0.6rem;
+  text-align: right;
+  color: #585b70;
+  font-size: 0.8rem;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ——— 代码高亮主题覆写 (Catppuccin 风格) ——— */
+.highlight .k  { color: #cba6f7; font-weight: 500; }  // keyword
+.highlight .kd { color: #cba6f7; }                     // keyword declaration
+.highlight .kr { color: #cba6f7; }                     // keyword reserved
+.highlight .kt { color: #cba6f7; }                     // keyword type
+.highlight .n  { color: #cdd6f4; }                     // name
+.highlight .nf { color: #89b4fa; }                     // name function
+.highlight .nx { color: #cdd6f4; }                     // name other
+.highlight .p  { color: #bac2de; }                     // punctuation
+.highlight .o  { color: #89b4fa; }                     // operator
+.highlight .s  { color: #a6e3a1; }                     // string
+.highlight .s1 { color: #a6e3a1; }                     // string single
+.highlight .s2 { color: #a6e3a1; }                     // string double
+.highlight .m  { color: #fab387; }                     // number
+.highlight .mi { color: #fab387; }                     // number integer
+.highlight .mf { color: #fab387; }                     // number float
+.highlight .c  { color: #6c7086; font-style: italic; } // comment
+.highlight .c1 { color: #6c7086; font-style: italic; } // comment single
+.highlight .cm { color: #6c7086; font-style: italic; } // comment multi
+.highlight .bp { color: #f38ba8; }                     // builtin pseudo
+.highlight .nb { color: #fab387; }                     // builtin
+.highlight .vc { color: #f9e2af; }                     // variable class
+.highlight .vg { color: #f9e2af; }                     // variable global
+.highlight .vi { color: #f9e2af; }                     // variable instance
+.highlight .sr { color: #a6e3a1; }                     // string regex
+.highlight .ss { color: #a6e3a1; }                     // string symbol
+.highlight .se { color: #f38ba8; }                     // string escape
+.highlight .ow { color: #cba6f7; }                     // operator word
+.highlight .fm { color: #89b4fa; }                     // function method
+.highlight .nc { color: #f9e2af; }                     // name class
+.highlight .nd { color: #f38ba8; }                     // name decorator
+.highlight .no { color: #f38ba8; }                     // name constant
+.highlight .na { color: #a6e3a1; }                     // name attribute
+
+/* ===================================
+   12. 首页文章卡片
+   =================================== */
+.archive__item {
+  background: #fff;
+  border: 1px solid #eef2f5;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.archive__item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.archive__item-title {
+  margin-top: 0 !important;
+  margin-bottom: 0.3rem !important;
+  font-size: 1.2rem !important;
+}
+
+.archive__item-title a {
+  color: #2c3e50;
+  text-decoration: none;
+  border-bottom: none;
+}
+
+.archive__item-title a:hover {
+  color: #1abc9c;
+}
+
+.archive__item-excerpt {
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* 首页文章元信息（日期、分类标签、阅读时间） */
+.archive__item .page__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.4rem 0 0;
+  font-size: 0.78rem;
+  color: #999;
+}
+
+.archive__item .page__meta i {
+  margin-right: 2px;
+}
+
+/* 分类/标签小药丸 */
+.article__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.article__tag-pill {
+  display: inline-block;
+  padding: 2px 10px;
+  font-size: 0.7rem;
+  background: #e8f5f0;
+  color: #1a7a4c;
+  border-radius: 20px;
+  text-decoration: none;
+  border: none;
+  transition: background 0.15s ease;
+}
+
+.article__tag-pill:hover {
+  background: #c8e6d8;
+  color: #155a3a;
+}
+
+/* ===================================
+   13. 暗色模式
+   =================================== */
+[data-theme="dark"] {
+  /* 背景 */
+  body, .masthead, .masthead__menu, .greedy-nav {
+    background-color: #1e1e2e !important;
+  }
+  .masthead {
+    border-bottom-color: #2a2a3c;
+  }
+
+  /* 文字 */
+  body, .page__content, .archive, .page__content p,
+  .page__content li, .page__content h1, .page__content h2,
+  .page__content h3, .page__content h4, .page__content h5, .page__content h6 {
+    color: #cdd6f4;
+  }
+  .page__content strong { color: #f5f5f5; }
+
+  /* 链接 */
+  .page__content a {
+    color: #a6e3a1;
+    border-bottom-color: rgba(166,227,161,0.3);
+  }
+  .page__content a:hover { border-bottom-color: #a6e3a1; }
+  .site-title { color: #cdd6f4 !important; }
+  .site-subtitle { color: #a6adc8 !important; }
+  .masthead__menu-item a { color: #cdd6f4; }
+  .masthead__menu-item a:hover { color: #a6e3a1 !important; }
+
+  /* 卡片 */
+  article.page, .archive, .sidebar .h-card, .toc-card, .archive__item {
+    background: #2a2a3c;
+    border-color: #3a3a4c;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .page__content h1 { border-bottom-color: #3a3a4c; }
+  .archive__item-title a { color: #cdd6f4; }
+  .archive__item-title a:hover { color: #a6e3a1; }
+  .archive__item-excerpt { color: #a6adc8; }
+
+  /* 代码 */
+  :not(pre) > code {
+    background: #363650;
+    color: #f38ba8;
+  }
+  pre.highlight {
+    background: #181825 !important;
+  }
+
+  /* 引用 */
+  .page__content blockquote {
+    background: #252537;
+    border-left-color: #a6e3a1;
+    color: #bac2de;
+  }
+
+  /* TOC & 侧边栏 */
+  .toc-card__content a { color: #a6adc8; }
+  .toc-card__content a.active { color: #a6e3a1 !important; }
+  .author-profile__stat-label { color: #a6adc8; }
+  .author-profile__stat-number { color: #cdd6f4; }
+
+  /* Archive meta */
+  .archive__item .page__meta { color: #6c7086; }
+  .page__footer { color: #a6adc8; }
+  .page__footer-copyright { color: #6c7086; }
+}
+
+/* ——— 切换按钮 ——— */
+.theme-toggle {
+  background: none;
+  border: 1px solid #dde1e6;
+  border-radius: 8px;
+  padding: 4px 10px;
+  cursor: pointer;
+  color: #5a6a7e;
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.theme-toggle:hover {
+  background: #eef2f5;
+  color: #2c3e50;
+}
+[data-theme="dark"] .theme-toggle {
+  border-color: #4a4a5c;
+  color: #f9e2af;
+}
+[data-theme="dark"] .theme-toggle:hover {
+  background: #363650;
+  color: #f9e2af;
+}
+.theme-toggle-item {
+  margin-left: 0.5rem;
+}
+
+/* ===================================
+   14. 回到顶部按钮
+   =================================== */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 1.5rem;
+  z-index: 99;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #e0e4e8;
+  border-radius: 50%;
+  background: #fff;
+  color: #5a6a7e;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease, background 0.15s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.back-to-top:hover {
+  background: #1abc9c;
+  color: #fff;
+  border-color: #1abc9c;
+}
+[data-theme="dark"] .back-to-top {
+  background: #2a2a3c;
+  border-color: #4a4a5c;
+  color: #cdd6f4;
+}
+[data-theme="dark"] .back-to-top:hover {
+  background: #a6e3a1;
+  color: #1e1e2e;
+  border-color: #a6e3a1;
+}
+
+/* ===================================
+   15. 阅读进度条
+   =================================== */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, #1abc9c, #1a7a4c);
+  z-index: 9999;
+  transition: width 0.1s linear;
+  border-radius: 0 2px 2px 0;
+}
+[data-theme="dark"] .reading-progress {
+  background: linear-gradient(90deg, #a6e3a1, #1abc9c);
+}
+
+/* ===================================
+   16. 分类/标签列表页
+   =================================== */
+.taxonomy-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.taxonomy-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  padding: 1.2rem 1.5rem;
+  background: #fff;
+  border: 1px solid #eef2f5;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.15s ease;
+  flex: 1 1 auto;
+  max-width: 200px;
+}
+
+.taxonomy-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  border-color: #1abc9c;
+}
+
+.taxonomy-card__name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.3rem;
+}
+
+.taxonomy-card__count {
+  font-size: 0.78rem;
+  color: #999;
+}
+
+/* 暗色模式 */
+[data-theme="dark"] .taxonomy-card {
+  background: #2a2a3c;
+  border-color: #3a3a4c;
+}
+[data-theme="dark"] .taxonomy-card:hover {
+  border-color: #a6e3a1;
+}
+[data-theme="dark"] .taxonomy-card__name {
+  color: #cdd6f4;
+}
+[data-theme="dark"] .taxonomy-card__count {
+  color: #6c7086;
+}

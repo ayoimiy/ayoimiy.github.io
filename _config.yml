@@ -12,12 +12,17 @@ minimal_mistakes_skin: "air"
 # ==============================================
 title: "算法"          # 网站主标题，出现在浏览器标签和导航栏
 title_separator: "-"          # 页面标题和网站标题之间的分隔符
-subtitle: "这是一个副标题"      # 副标题，显示在网站主标题下方 (可选)
+subtitle: "寻路算法 · Lua 编程 · 数学笔记"      # 副标题，显示在网站主标题下方 (可选)
+locale: "zh-CN"               # 网站语言
+og_image: "/assets/images/avatar.jpg"  # Open Graph 默认分享图
 name: "ayoimiy"               # 网站作者或拥有者名称
-description: "描述被哈米斯吃了"     # 用于 SEO 的网站描述
+description: "ayoimiy 的技术博客，分享寻路算法、Lua 编程、Noita Mod 开发、数据结构与算法笔记"     # 用于 SEO 的网站描述
 url: "https://ayoimiy.github.io" # 你的博客域名 (重要，需替换)
 baseurl: ""                   # 你的博客在根目录下，这里留空
-repository: "ayoimiy.github.io" # 你的 GitHub 仓库地址 (重要，需替换)
+repository: "ayoimiy/ayoimiy.github.io" # 你的 GitHub 仓库 (重要，需替换)
+search: true                     # 启用 lunr 全文搜索
+lunr:
+  search_within_pages: false
 
 # ==============================================
 # 第三步：插件与构建 (Plugins & Build)
@@ -43,13 +48,21 @@ paginate_path: /page:num/      # 分页页面的路径
 # ==============================================
 # 第四步：评论与数据分析 (Comments & Analytics) (可选)
 # ==============================================
-# 评论系统 (推荐: giscus)
-# 具体配置方法比较复杂，建议暂时不填，等博客跑通后再研究
-# comments:
-#   provider: "giscus"
-#   giscus:
-#     repo_id: "你的repo_id"
-#     ...
+# giscus 评论（基于 GitHub Discussions，免费无广告）
+# 配置步骤:
+#   1. 仓库启用 Discussions: https://github.com/ayoimiy/ayoimiy.github.io/settings
+#   2. 安装 giscus app: https://github.com/apps/giscus
+#   3. 访问 https://giscus.app/ 获取 repo_id 和 category_id
+comments:
+  provider: "giscus"
+  giscus:
+    repo_id: "REPO_ID"           # 从 giscus.app 获取
+    category_name: "General"     # Discussions 分类名
+    category_id: "CATEGORY_ID"   # 从 giscus.app 获取
+    discussion_term: "pathname"
+    reactions_enabled: "1"
+    theme: "preferred_color_scheme"
+    strict: false
 
 # Google Analytics 追踪 ID
 # analytics:
