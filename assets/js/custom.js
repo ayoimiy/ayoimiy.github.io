@@ -146,16 +146,18 @@ document.addEventListener('DOMContentLoaded', function () {
         document.documentElement.setAttribute('data-theme', 'dark');
         toggle.innerHTML = '<i class="fas fa-sun"></i>';
       } else {
-        document.documentElement.removeAttribute('data-theme');
+        document.documentElement.setAttribute('data-theme', 'light');
         toggle.innerHTML = '<i class="fas fa-moon"></i>';
       }
     }
 
-    // 初始化：优先 localStorage，其次系统偏好
+    // 初始化：优先 localStorage，其次系统偏好，默认暗色
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved === 'dark' || saved === 'light') {
       setTheme(saved);
     } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setTheme('dark');
+    } else {
       setTheme('dark');
     }
 
@@ -215,7 +217,80 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.appendChild(btn);
   })();
 
-  // ========= 5. 阅读进度条 =========
+  // ========= 5. 粒子背景画布 =========
+  (function () {
+    if (document.getElementById('particle-canvas')) return;
+    const canvas = document.createElement('canvas');
+    canvas.id = 'particle-canvas';
+    document.body.prepend(canvas);
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let w, h;
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // 在暗色模式下使用蓝色粒子，亮色模式使用绿色粒子
+    function getColor() {
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+      return isDark ? '88,166,255' : '26,188,156';
+    }
+
+    for (let i = 0; i < 50; i++) {
+      particles.push({
+        x: Math.random() * w, y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4 - 0.1,
+        r: Math.random() * 1.5 + 0.5,
+        a: Math.random() * 0.4 + 0.1
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      const rgb = getColor();
+      particles.forEach(function (p) {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0) p.x = w;
+        if (p.x > w) p.x = 0;
+        if (p.y < 0) p.y = h;
+        if (p.y > h) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(' + rgb + ',' + p.a + ')';
+        ctx.fill();
+      });
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = 'rgba(' + rgb + ',' + ((1 - dist / 150) * 0.08) + ')';
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    // 主题切换时重新绘制（颜色变化）
+    const observer = new MutationObserver(function () {
+      if (canvas) { /* color will update on next frame via getColor() */ }
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  })();
+
+  // ========= 6. 阅读进度条 =========
   (function () {
     const bar = document.createElement('div');
     bar.className = 'reading-progress';
