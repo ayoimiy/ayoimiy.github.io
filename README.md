@@ -63,6 +63,8 @@ npm run preview
 
 ## 写一篇文章
 
+完整的增页流程（建文件 → 登记侧边栏 → 索引页 → 本地验证 → 常见错误）见 **[写作指南.md](写作指南.md)**。下面是速查版。
+
 在 `src/content/docs/` 下新增 `.md` 或 `.mdx` 文件。常用 frontmatter：
 
 ```yaml
