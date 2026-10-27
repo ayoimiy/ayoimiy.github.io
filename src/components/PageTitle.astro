@@ -1,0 +1,137 @@
+---
+const data = Astro.locals.starlightRoute.entry.data;
+
+const status = data.status ?? 'wip';
+const statusLabel = {
+  stable: '已归档',
+  wip: '整理中',
+  draft: '草稿',
+}[status];
+
+const tags = Array.isArray(data.tags) ? data.tags : [];
+---
+
+<header class="entry-heading">
+  <div class="entry-kicker">
+    <span class="entry-kicker__label">ARCHIVE ENTRY</span>
+    <span class="entry-kicker__rule" aria-hidden="true"></span>
+    <span class:list={['entry-status', `entry-status--${status}`]}>{statusLabel}</span>
+  </div>
+
+  <h1 id="_top">{data.title}</h1>
+
+  {data.description && <p class="entry-description">{data.description}</p>}
+
+  <div class="entry-meta">
+    {data.updated && <span>更新于 {data.updated}</span>}
+    {data.gameVersion && <span>游戏版本 {data.gameVersion}</span>}
+    {
+      tags.length > 0 && (
+        <span class="entry-tags">
+          {tags.map((tag) => (
+            <span class="entry-tag">#{tag}</span>
+          ))}
+        </span>
+      )
+    }
+  </div>
+</header>
+
+<style>
+  @layer starlight.components {
+    .entry-heading {
+      padding-top: clamp(1.5rem, 4vw, 3rem);
+    }
+
+    .entry-kicker {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      font-family: 'Silkscreen', 'Courier New', monospace;
+      font-size: 0.64rem;
+      letter-spacing: 0.16em;
+      color: var(--gold, #d8b56f);
+    }
+
+    .entry-kicker__rule {
+      width: min(7rem, 20vw);
+      height: 1px;
+      background: linear-gradient(90deg, var(--line-strong, rgba(216, 181, 111, 0.38)), transparent);
+    }
+
+    .entry-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--sl-color-gray-3, #8d8675);
+      letter-spacing: 0.08em;
+    }
+
+    .entry-status::before {
+      content: '';
+      width: 0.38rem;
+      height: 0.38rem;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 8px currentColor;
+    }
+
+    .entry-status--stable {
+      color: var(--moss, #93a77b);
+    }
+
+    .entry-status--wip {
+      color: var(--gold, #d8b56f);
+    }
+
+    .entry-status--draft {
+      color: var(--sl-color-red, #c47a64);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 24ch;
+      font-family: var(--font-display, serif);
+      font-size: clamp(2rem, 4.6vw, 3.4rem);
+      font-weight: 600;
+      line-height: 1.16;
+      letter-spacing: -0.025em;
+      color: var(--sl-color-white, #f3ebda);
+      text-wrap: balance;
+    }
+
+    .entry-description {
+      max-width: 48ch;
+      margin: 1.1rem 0 0;
+      font-size: var(--sl-text-lg, 1.125rem);
+      line-height: 1.8;
+      color: var(--sl-color-gray-2, #b9b09b);
+    }
+
+    .entry-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 1.4rem;
+      margin-top: 1.25rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid var(--line, rgba(216, 181, 111, 0.18));
+      font-family: 'Silkscreen', 'Courier New', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sl-color-gray-3, #8d8675);
+    }
+
+    .entry-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .entry-tag {
+      color: var(--gold-dim, #8a713f);
+    }
+  }
+</style>

@@ -1,0 +1,92 @@
+---
+title: Noita 知识库
+description: Noita Mod 制作手册、机制研究与实验记录。写给愿意把游戏拆开看的人。
+template: splash
+tableOfContents: false
+hero:
+  title: '在崩坏的矿洞中，<br/>记录每一条<span class="hero-gold">规律</span>。'
+  tagline: 'Noita Mod 制作手册、机制研究与实验记录。<br/>写给愿意把游戏拆开看的人。'
+  image:
+    file: ../../assets/hero-sigil.svg
+    alt: ''
+  actions:
+    - text: 开始阅读
+      link: /start-here/
+      icon: right-arrow
+      variant: primary
+    - text: 进入 Mod 手册
+      link: /modding/getting-started/
+      variant: minimal
+---
+
+import HomeCard from '../../components/HomeCard.astro';
+import EntryList from '../../components/EntryList.astro';
+import { latestEntries } from '../../data/home';
+
+<div class="archive-strip">
+  <span class="archive-strip__signal"><i></i> ARCHIVE ONLINE</span>
+  <span>BUILD 0.1 / DEMO</span>
+  <span>MODDING + RESEARCH</span>
+  <span>ZH-CN</span>
+</div>
+
+<section class="home-section">
+  <div class="home-section__heading">
+    <div>
+      <p class="home-eyebrow">INDEX / 档案索引</p>
+      <h2>三条进入矿洞的路线</h2>
+    </div>
+    <p class="home-section__aside">从环境搭建，到机制拆解，再到可复现的实验记录。</p>
+  </div>
+
+  <div class="home-card-grid">
+    <HomeCard
+      index="01"
+      eyebrow="MODDING"
+      title="Mod 制作"
+      description="目录结构、mod.xml、Lua 钩子、调试方法与兼容性习惯。把第一个能跑起来的 Mod 搭出来。"
+      href="/modding/getting-started/"
+      meta="2 ENTRIES / 持续更新"
+      icon="book"
+    />
+    <HomeCard
+      index="02"
+      eyebrow="RESEARCH"
+      title="Noita 研究"
+      description="魔杖参数、炼金反应、法术交互。先定义变量，再记录现象，最后才下结论。"
+      href="/research/wand-mechanics/"
+      meta="2 ENTRIES / 实验笔记"
+      icon="flask"
+    />
+    <HomeCard
+      index="03"
+      eyebrow="REFERENCE"
+      title="资料与工具"
+      description="法术、材料与版本差异的索引。为后续的数据查询和交互工具预留位置。"
+      href="/reference/spells/"
+      meta="INDEX BUILDING"
+      icon="wand"
+    />
+  </div>
+</section>
+
+<section class="home-section home-section--latest">
+  <div class="home-section__heading">
+    <div>
+      <p class="home-eyebrow">LATEST / 最近归档</p>
+      <h2>新近写入的条目</h2>
+    </div>
+    <a class="home-inline-link" href="/start-here/">查看全部导览 <span aria-hidden="true">↗</span></a>
+  </div>
+
+  <EntryList entries={latestEntries} />
+</section>
+
+<div class="archive-note">
+  <span class="archive-note__mark" aria-hidden="true">✦</span>
+  <div>
+    <p class="archive-note__quote">把每一次失败的重启，都变成下一条可复现的记录。</p>
+    <p class="archive-note__label">ARCHIVE PRINCIPLE / 归档原则</p>
+  </div>
+  <a class="archive-note__link" href="/about/">关于这个档案 <span aria-hidden="true">→</span></a>
+</div>

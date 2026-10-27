@@ -1,0 +1,177 @@
+---
+title: Lua 脚本入门
+description: 从 init.lua 的生命周期钩子开始，理解当前实体、玩家实体、文件加载与不覆盖别人的兼容性写法。
+status: wip
+updated: 2026.10.21
+gameVersion: 当前正式版
+tags: [Lua, API, 入门]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Noita 的 Mod 脚本有两种常见落点：
+
+- **`init.lua`**：每个 Mod 一个入口，负责注册钩子、加载文件和修改全局系统。
+- **`LuaComponent`**：挂在某个实体上的脚本，随实体一起运行，适合处理子弹、敌人、物品等局部逻辑。
+
+先理解这个区别，能避免很多“为什么我拿到的实体不对”的问题。
+
+## init.lua 的钩子
+
+下面这些函数不是你要手动调用的，而是游戏在特定时机调用。你只需要按需实现。
+
+| 钩子 | 调用时机 | 常见用途 |
+| --- | --- | --- |
+| `OnModPreInit()` | Mod 初始化之前 | 很少使用，通常放兼容性预处理 |
+| `OnModInit()` | Mod 初始化 | 注册文件、修改配置 |
+| `OnModPostInit()` | Mod 初始化完成 | 依赖其他 Mod 的收尾工作 |
+| `OnPlayerSpawned(player)` | 玩家实体创建后 | 给玩家物品、打印提示、初始化玩家状态 |
+| `OnPlayerDied(player)` | 玩家死亡 | 清理或记录 |
+| `OnWorldInitialized()` | 世界初始化完成 | 修改世界级参数，但不保证玩家附近区块已加载 |
+| `OnWorldPreUpdate()` | 每次世界更新前 | 逐帧逻辑；注意性能 |
+| `OnWorldPostUpdate()` | 每次世界更新后 | 读取更新后的结果 |
+| `OnModSettingsChanged()` | 暂停菜单中修改 Mod 设置后 | 应用新设置 |
+
+不要把所有逻辑都塞进 `OnWorldPreUpdate()`。它每一帧都会执行，而且很多游戏系统此时还没有准备好。
+
+## 一个能产生实际效果的例子
+
+下面这段代码在玩家出生时，于玩家附近生成一个金块：
+
+```lua
+function OnPlayerSpawned(player)
+    local x, y = EntityGetTransform(player)
+    if not x or not y then
+        return
+    end
+
+    EntityLoad("data/entities/items/pickup/goldnugget_200.xml", x + 24, y)
+    GamePrint("A small offering.")
+end
+```
+
+涉及三个基础 API：
+
+| API | 作用 |
+| --- | --- |
+| `EntityGetTransform(entity)` | 读取实体位置，返回 `x, y` |
+| `EntityLoad(path, x, y)` | 从 XML 加载实体，返回实体 ID 或 `nil` |
+| `GamePrint(text)` | 在游戏界面打印文本，正式版也能看到 |
+
+`EntityLoad` 的路径以游戏根目录为基准。加载 `data/` 下的原版实体时直接写 `data/...`；加载自己 Mod 里的实体时写完整路径，例如：
+
+```lua
+EntityLoad("mods/hello_noita/files/entities/my_orb.xml", x, y)
+```
+
+## 当前实体与玩家实体
+
+在 `LuaComponent` 里，`GetUpdatedEntityID()` 返回“当前脚本所属的实体”。它可能是玩家、法杖、子弹或任意带有该组件的实体。
+
+```lua
+local entity = GetUpdatedEntityID()
+local x, y = EntityGetTransform(entity)
+```
+
+而在 `init.lua` 的全局钩子里，当前实体这个概念并不总是成立。需要玩家时，使用钩子参数，或者通过工具函数查找：
+
+```lua
+dofile_once("data/scripts/lib/utilities.lua")
+
+function get_player()
+    local players = get_players()
+    if players then
+        return players[1]
+    end
+
+    return nil
+end
+```
+
+读取玩家当前手持物品时，可以访问 `Inventory2Component`：
+
+```lua
+local function get_held_item(player)
+    local inventory = EntityGetFirstComponentIncludingDisabled(
+        player,
+        "Inventory2Component"
+    )
+
+    if not inventory then
+        return nil
+    end
+
+    return ComponentGetValue2(inventory, "mActiveItem")
+end
+```
+
+注意：手持物可能是法杖，也可能是药瓶、石板或其他物品。不要默认它一定是法杖。
+
+## 加载自己的脚本
+
+Noita 的 Mod 环境限制了一部分标准 Lua 库。`require` 不可用，但可以使用 `dofile_once`：
+
+```lua
+dofile_once("mods/hello_noita/files/lib/helpers.lua")
+```
+
+路径必须包含 `mods/<你的文件夹>/` 前缀。`dofile_once` 会避免同一个文件被重复执行。
+
+推荐把逻辑拆成可复用文件：
+
+```text
+hello_noita/
+├─ init.lua
+├─ mod.xml
+└─ files/
+   ├─ lib/
+   │  └─ helpers.lua
+   └─ entities/
+      └─ my_orb.xml
+```
+
+## 追加，而不是覆盖
+
+如果直接把自己的 `data/scripts/gun/gun.lua` 放进 Mod，它会覆盖基础游戏文件，并和其他做同一件事的 Mod 冲突。
+
+更兼容的做法是在 `init.lua` 中追加：
+
+```lua
+ModLuaFileAppend(
+    "data/scripts/gun/gun_actions.lua",
+    "mods/hello_noita/files/gun_actions_append.lua"
+)
+```
+
+这样你的代码会在原文件之后执行，其他 Mod 也能继续追加。XML 修改同理：优先使用 NXML 的修改指令，而不是复制整份文件覆盖。
+
+<Aside type="caution" title="路径写错时，游戏不一定会给你明显提示">
+如果 `ModLuaFileAppend` 的目标文件不存在，或者第二个路径少写了 `mods/`，实际表现可能只是“没有效果”。先在开发控制台确认加载顺序，再怀疑逻辑。
+</Aside>
+
+## 受限库与替代方案
+
+| 不能直接用 | 替代方式 |
+| --- | --- |
+| `require` | `dofile_once("mods/...")` |
+| `os.time()` | `GameGetDateAndTimeLocal()` |
+| `io.*` | 使用游戏 flags、Mod 设置或外部工具 |
+| 直接写任意文件 | 先确认 API 是否允许；不要把存档写入当成默认能力 |
+
+持久化数据通常通过 flags 或 Mod 设置完成。不要为了“先把数据存下来”就打开 `request_no_api_restrictions`，那会扩大兼容性和安全风险。
+
+## 调试习惯
+
+1. 在关键分支写 `GamePrint()`，先确认代码有没有执行。
+2. 用 `noita_dev.exe` 的 `print()` 和错误堆栈定位 Lua 语法问题。
+3. 每次只改一个变量；一次改五处，失败后无法判断是哪一处。
+4. 修改后完整重启游戏。
+5. 出错时记录：游戏版本、启用的 Mod、复现步骤、控制台第一行错误。
+
+## 小练习
+
+- 把金块换成你自己写的实体 XML，并让它从玩家头顶落下。
+- 给 `OnPlayerSpawned` 加一个“只执行一次”的标记，避免读档后重复发放。
+- 用 `LuaComponent` 给一个子弹添加每帧旋转，而不是在 `init.lua` 里遍历所有实体。
+
+下一步可以回到 [魔杖机制研究](/research/wand-mechanics/)，看看怎样把游戏内观察变成结构化实验记录。

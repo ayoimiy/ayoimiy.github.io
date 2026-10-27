@@ -1,0 +1,157 @@
+---
+title: 开发环境与项目骨架
+description: 从 Noita 的 mods 目录开始，建立一个能被游戏识别、能打印日志、能随时重启的最小 Mod。
+status: stable
+updated: 2026.10.21
+gameVersion: 当前正式版
+tags: [Mod, 入门, 工具链]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+你不需要先学会整套 Lua，也不需要写一个完整玩法。第一阶段的唯一目标是：
+
+**让 Noita 认出你的 Mod，并在玩家出生时打印一句话。**
+
+只要这件事跑通，后面的目录结构、脚本钩子和调试方式都会变得具体。
+
+<Aside type="note" title="本文以 Windows / Steam 版为例">
+Noita 的安装路径和 Mod 目录会随平台变化。Linux、Proton 和 macOS 的路径不同，但项目内部结构一致。关键是找到游戏根目录下的 `mods` 文件夹。
+</Aside>
+
+## 前置准备
+
+| 工具 | 用途 | 是否必需 |
+| --- | --- | --- |
+| 文本编辑器（VS Code、Neovim 等） | 编辑 Lua、XML 与 Markdown | 必需 |
+| Noita 正式版 | 运行与测试 Mod | 必需 |
+| Git | 记录版本、备份和发布 | 推荐 |
+| Component Explorer | 在游戏内查看实体组件、执行 Lua | 强烈推荐 |
+| `noita_dev.exe` | 开发控制台与错误输出 | 强烈推荐 |
+
+`noita_dev.exe` 和 `tools_modding/` 文件夹来自游戏安装目录。开发构建通常需要放在 Noita 根目录，与 `noita.exe` 同级运行。
+
+## 第一步：找到 mods 目录
+
+在 Steam 中右键 Noita：
+
+**管理 → 浏览本地文件 → 打开游戏根目录**
+
+你应该能看到：
+
+```text
+Noita/
+├─ noita.exe
+├─ data/
+├─ mods/
+└─ tools_modding/
+```
+
+如果 `mods/` 不存在，可以手动创建。手动开发中的 Mod 放在这里；从 Steam 创意工坊订阅的 Mod 则通常在 `steamapps/workshop/content/881100/` 下。
+
+## 第二步：建立最小项目
+
+在 `mods/` 中新建一个文件夹。文件夹名会成为 Mod 的路径标识，建议使用小写、下划线和稳定的名称：
+
+```text
+mods/
+└─ hello_noita/
+   ├─ mod.xml
+   └─ init.lua
+```
+
+### mod.xml
+
+`mod.xml` 是 Mod 的元数据文件，负责告诉游戏“这个 Mod 叫什么、做什么”。
+
+```xml
+<Mod
+    name="Hello Noita"
+    description="A minimal example mod for the Noita Archive."
+/>
+```
+
+这里先只使用 `name` 和 `description`。`mod.xml` 还支持游戏模式、翻译、无限制 API 等选项，但第一版不需要。尤其是 `request_no_api_restrictions`，除非你确实需要访问受限库，否则不要打开。
+
+### init.lua
+
+`init.lua` 是 Mod 的入口。游戏会在加载 Mod 时执行其中预定义的钩子函数。
+
+```lua
+function OnPlayerSpawned(player)
+    GamePrint("Hello Noita!")
+end
+```
+
+这段代码只做一件事：玩家实体创建后，在游戏界面左下角打印 `Hello Noita!`。
+
+`OnPlayerSpawned(player)` 的参数是玩家实体 ID。现在先不使用它，下一步再通过实体 API 做真正的事情。
+
+## 第三步：启用并验证
+
+1. 启动 Noita。
+2. 进入主菜单的 **Mods / 模组** 菜单。
+3. 找到 `Hello Noita` 并启用。
+4. 开始一局新游戏。
+5. 观察屏幕左下角是否出现 `Hello Noita!`。
+
+如果 Mod 列表里没有出现它，优先检查：
+
+- `mod.xml` 是否直接位于 `mods/hello_noita/` 下，而不是多套了一层文件夹。
+- 文件名是否为小写 `mod.xml`，不是 `mod.XML` 或 `mod.xml.txt`。
+- XML 是否有未闭合的标签。
+- 游戏是否完全重启过。
+
+<Aside type="caution" title="改完代码后请完整重启">
+Noita 对 Mod 文件变化的检测并不总是可靠。开发阶段最稳妥的做法是：完全退出游戏，再重新启动并开始新游戏。不要只依赖“返回主菜单再进一次”。
+</Aside>
+
+## 第四步：打开开发控制台
+
+`GamePrint()` 在正式版里也能显示，但真正的错误堆栈、`print()` 输出和脚本加载信息需要开发构建。
+
+把 `tools_modding/` 中的 `noita_dev.exe` 放到 Noita 根目录后运行：
+
+- `F1` 查看调试快捷键。
+- `F5` 打开更多调试功能。
+- 控制台会显示 Lua 错误、XML 解析错误和 `print()` 输出。
+
+开发构建可能降低帧率。日常游玩时切回正式版即可。
+
+## 第五步：查阅游戏数据
+
+Noita 的绝大部分基础内容打包在 `data/data.wak` 中。要查看官方 Lua、实体 XML 和贴图，可以把 `tools_modding/` 里的文件复制到游戏根目录，运行 `data_wak_unpack.bat`。
+
+解包后常见位置：
+
+```text
+%USERPROFILE%/AppData/LocalLow/Nolla_Games_Noita/
+```
+
+<Aside type="danger" title="会看到剧透">
+解包数据包含法术、剧情、敌人和秘密的完整定义。如果你还没通关，建议先只查阅当前 Mod 需要的最小范围。
+</Aside>
+
+不要直接修改 `data/` 来“覆盖”基础游戏文件。那会让你的 Mod 与其他修改同一文件的 Mod 冲突。更常见的做法是：
+
+- 修改或追加 Lua：使用 `ModLuaFileAppend`。
+- 修改 XML：使用 NXML 或复制到自己的 `files/` 路径。
+- 新增实体与资源：放在自己的 `files/` 或 `data/` 结构中，并避免无意覆盖原文件。
+
+## 常见问题
+
+| 现象 | 优先检查 |
+| --- | --- |
+| 游戏里没有 Mod | `mods/<名称>/mod.xml` 的层级、文件名大小写、XML 是否合法 |
+| 有 Mod 但没有任何输出 | `init.lua` 是否在根目录、函数名是否拼写正确 |
+| 修改后行为不变 | 是否完整重启游戏；是否启用了另一个同名 Mod |
+| 控制台没有 `print()` | 是否使用 `noita_dev.exe`；`GamePrint()` 是否可见 |
+| 与其他 Mod 冲突 | 是否直接覆盖了 `data/` 下的共享文件；是否重复加载同一段逻辑 |
+
+## 下一步
+
+- 去 [Lua 脚本入门](/modding/lua-basics/) 学习实体、钩子和兼容性写法。
+- 打开游戏内的 Component Explorer，选中玩家，看看它到底由哪些组件组成。
+- 给你的 Mod 加一行 `print("loaded")`，确认开发控制台能抓到输出。
+
+Mod 制作的大部分时间不是“写对第一行代码”，而是建立一个能快速失败、快速定位、快速重启的循环。先把循环搭好。

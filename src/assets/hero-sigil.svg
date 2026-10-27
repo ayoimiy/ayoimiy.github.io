@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" fill="none">
+  <defs>
+    <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e8cc8a" stop-opacity=".22"/>
+      <stop offset="55%" stop-color="#c39b55" stop-opacity=".06"/>
+      <stop offset="100%" stop-color="#0b0e0a" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <circle cx="300" cy="300" r="292" fill="url(#coreGlow)"/>
+
+  <g stroke="#d8b56f" stroke-linecap="round">
+    <circle cx="300" cy="300" r="286" stroke-opacity=".18" stroke-dasharray="2 11"/>
+    <circle cx="300" cy="300" r="252" stroke-opacity=".52"/>
+    <circle cx="300" cy="300" r="242" stroke-opacity=".16"/>
+    <circle cx="300" cy="300" r="198" stroke-opacity=".28" stroke-dasharray="1 6"/>
+    <circle cx="300" cy="300" r="148" stroke-opacity=".22"/>
+  </g>
+
+  <g stroke="#c9a45b" stroke-opacity=".42">
+    <path d="M300 114 455 384H145Z"/>
+    <path d="M300 486 145 216H455Z"/>
+    <circle cx="300" cy="300" r="120"/>
+  </g>
+
+  <g stroke="#d8b56f" stroke-opacity=".62" stroke-linecap="round">
+    <path d="M300 10v18M300 572v18M10 300h18M572 300h18"/>
+    <path d="m89 89 12 12M499 499l12 12M511 89l-12 12M101 499l-12 12"/>
+    <path d="M300 42v10M300 548v10M42 300h10M548 300h10"/>
+  </g>
+
+  <g stroke="#d8b56f" stroke-opacity=".8" stroke-width="1.2">
+    <path d="m300 58 7 16-7 16-7-16Z"/>
+    <path d="m300 510 7 16-7 16-7-16Z"/>
+    <path d="m58 300 16-7 16 7-16 7Z"/>
+    <path d="m510 300 16-7 16 7-16 7Z"/>
+  </g>
+
+  <g stroke="#a9864a" stroke-opacity=".45">
+    <ellipse cx="300" cy="300" rx="230" ry="82" transform="rotate(30 300 300)"/>
+    <ellipse cx="300" cy="300" rx="230" ry="82" transform="rotate(-30 300 300)"/>
+    <ellipse cx="300" cy="300" rx="230" ry="82" transform="rotate(90 300 300)"/>
+  </g>
+
+  <g fill="#d8b56f">
+    <circle cx="300" cy="215" r="4" opacity=".85"/>
+    <circle cx="490" cy="390" r="3" opacity=".55"/>
+    <circle cx="110" cy="210" r="3" opacity=".55"/>
+    <circle cx="300" cy="385" r="2.5" opacity=".45"/>
+  </g>
+
+  <g filter="url(#softGlow)">
+    <path d="M180 300q120-112 240 0Q300 412 180 300Z" stroke="#e6c987" stroke-width="1.6"/>
+    <path d="M212 300q88-78 176 0Q300 378 212 300Z" stroke="#b8914f" stroke-opacity=".6"/>
+    <circle cx="300" cy="300" r="46" stroke="#e6c987" stroke-width="1.4"/>
+    <circle cx="300" cy="300" r="31" fill="#d8b56f" fill-opacity=".12" stroke="#f0d79c" stroke-opacity=".8"/>
+    <ellipse cx="300" cy="300" rx="10" ry="27" fill="#0a0c09" stroke="#e6c987" stroke-width="1.2"/>
+    <circle cx="288" cy="288" r="4" fill="#f0d79c" fill-opacity=".9"/>
+  </g>
+
+  <g stroke="#d8b56f" stroke-opacity=".22" stroke-dasharray="1 9">
+    <circle cx="300" cy="300" r="268"/>
+    <path d="M300 32v-8M568 300h8M300 568v8M32 300h-8"/>
+  </g>
+</svg>

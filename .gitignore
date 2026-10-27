@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.astro/
+.npm-cache/
+.tools/
+.edge-profile*/
+preview/
+qa-*.png
+preview-*.png
+.DS_Store
+Thumbs.db
+*.log
+
+# Obsidian 配置与回收站
+.obsidian/
+.trash/
