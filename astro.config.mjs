@@ -42,6 +42,7 @@ export default defineConfig({
           items: [
             { label: '开发环境与项目骨架', slug: 'modding/getting-started' },
             { label: 'Lua 脚本入门', slug: 'modding/lua-basics' },
+            { label: '元表与面向对象', slug: 'modding/lua-metatables' },
             { label: 'Yoita项目' , slug: 'research/yoita'},
             { label: 'LuaAPI' , slug: 'research/lua_api'},
           ],
@@ -50,6 +51,8 @@ export default defineConfig({
           label: 'Noita 研究',
           items: [
             { label: '组件机制研究', slug: 'research/components' },
+            { label: '实体类型', slug: 'research/entity-types' },
+            { label: '寻路算法', slug: 'research/pathfinding' },
             { label: '魔杖机制研究', slug: 'research/wand-mechanics' },
             { label: '炼金实验记录', slug: 'research/alchemy-notes' },
           ],
