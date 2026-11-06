@@ -22,6 +22,7 @@
 | 样式 | 原生 CSS + Starlight CSS 变量 |
 | 包管理 | npm |
 | 部署目标 | GitHub Pages（`https://ayoimiy.github.io`） |
+| 内容许可 | CC BY-NC-SA 4.0（见 [LICENSE](LICENSE)） |
 
 ## 本地运行
 
@@ -106,7 +107,9 @@ tags: [Mod, Lua]
 - 首页“最近归档”和卡片条目数从内容集合自动统计，按 `updated` 排序；
 - `/archive/` 全部条目页：按分区列出所有页面，含未进侧边栏的内容；
 - `/log/` 日志频道：每月一个文件，按天记录；
-- 自定义 404 页面；
+- 自定义 404 页面，并内嵌 Pagefind 搜索；
+- 每页显示基于 Git 提交记录的最后更新时间；
+- 分享卡片图（`og:image`）与 `robots.txt`、sitemap；
 - 文章页自定义标题区，展示状态、版本与标签；
 - 文章标题、表格、引用、代码块与提示框的统一样式；
 - Markdown 表格默认铺满正文宽度，超宽表格在表格容器内横向滚动；
@@ -119,7 +122,7 @@ tags: [Mod, Lua]
 - [x] 设置正式 `site` URL（`https://ayoimiy.github.io`）并接入 GitHub Actions 工作流；
 - [x] 在 GitHub 创建 `ayoimiy.github.io` 仓库、首次发布并接管根地址；
 - [x] 迁入旧博客的 4 篇文章；
-- [ ] 确定内容许可证、转载规则与素材使用边界；
+- [x] 确定内容许可证（CC BY-NC-SA 4.0）与素材使用边界；
 - [ ] 补齐真实文章、版本号与实验数据；
 - [ ] 决定评论、统计和贡献流程；
 - [ ] 自定义域名（可选）；

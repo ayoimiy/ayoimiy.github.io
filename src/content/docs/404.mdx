@@ -1,0 +1,63 @@
+---
+title: 页面走丢了
+description: 这个地址在档案里不存在。
+template: splash
+tableOfContents: false
+head:
+  - tag: meta
+    attrs:
+      name: robots
+      content: noindex
+  - tag: link
+    attrs:
+      rel: stylesheet
+      href: /pagefind/pagefind-ui.css
+  - tag: script
+    attrs:
+      src: /pagefind/pagefind-ui.js
+  - tag: script
+    content: |
+      window.addEventListener('DOMContentLoaded', function () {
+        if (typeof window.PagefindUI !== 'function') return;
+        new window.PagefindUI({
+          element: '#pagefind-search',
+          showSubResults: true,
+          translations: {
+            placeholder: '搜索知识库…',
+            zero_results: '没有找到与 [SEARCH_TERM] 相关的内容',
+            one_result: '找到 [COUNT] 条与 [SEARCH_TERM] 相关的内容',
+            many_results: '找到 [COUNT] 条与 [SEARCH_TERM] 相关的内容',
+            searching: '搜索中…',
+            clear_search: '清除',
+            load_more: '加载更多结果',
+          },
+        });
+      });
+  - tag: style
+    content: |
+      .not-found-search {
+        --pagefind-ui-scale: 0.9;
+        --pagefind-ui-primary: #d8b56f;
+        --pagefind-ui-text: #f3ebda;
+        --pagefind-ui-background: #10140f;
+        --pagefind-ui-border: rgba(216, 181, 111, 0.25);
+        --pagefind-ui-tag: #10140f;
+        --pagefind-ui-border-width: 1px;
+        --pagefind-ui-border-radius: 2px;
+        --pagefind-ui-font: inherit;
+        margin: 1.2rem 0 2rem;
+      }
+---
+
+这条记录不在地下室里。可能是链接写错了，或者这篇文章已经被移动、改名。
+
+## 先搜一下
+
+<div id="pagefind-search" class="not-found-search"></div>
+
+## 或者从这里回去
+
+- [回到首页](/)
+- [知识库导览](/start-here/)
+- [全部条目](/archive/)
+- [日志](/log/)

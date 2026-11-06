@@ -67,6 +67,7 @@ export default defineConfig({
         },
       ],
       credits: false,
+      lastUpdated: true,
       expressiveCode: {
         themes: ['github-dark-dimmed'],
       },
@@ -74,6 +75,26 @@ export default defineConfig({
         {
           tag: 'meta',
           attrs: { name: 'theme-color', content: '#080a08' },
+        },
+        {
+          tag: 'meta',
+          attrs: { property: 'og:image', content: 'https://ayoimiy.github.io/og.png' },
+        },
+        {
+          tag: 'meta',
+          attrs: { property: 'og:image:width', content: '1200' },
+        },
+        {
+          tag: 'meta',
+          attrs: { property: 'og:image:height', content: '630' },
+        },
+        {
+          tag: 'meta',
+          attrs: { property: 'og:image:alt', content: 'Noita 知识库：Mod 制作、机制研究与实验记录' },
+        },
+        {
+          tag: 'meta',
+          attrs: { name: 'twitter:card', content: 'summary_large_image' },
         },
       ],
     }),
