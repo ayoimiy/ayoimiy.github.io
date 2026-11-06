@@ -19,7 +19,7 @@ hero:
       variant: minimal
 ---
 
-import HomeCard from '../../components/HomeCard.astro';
+import HomeCards from '../../components/HomeCards.astro';
 import RecentEntries from '../../components/RecentEntries.astro';
 
 <div class="archive-strip">
@@ -38,35 +38,7 @@ import RecentEntries from '../../components/RecentEntries.astro';
     <p class="home-section__aside">从环境搭建，到机制拆解，再到可复现的实验记录。</p>
   </div>
 
-  <div class="home-card-grid">
-    <HomeCard
-      index="01"
-      eyebrow="MODDING"
-      title="Mod 制作"
-      description="目录结构、mod.xml、Lua 钩子、调试方法与兼容性习惯。把第一个能跑起来的 Mod 搭出来。"
-      href="/modding/getting-started/"
-      meta="2 ENTRIES / 持续更新"
-      icon="book"
-    />
-    <HomeCard
-      index="02"
-      eyebrow="RESEARCH"
-      title="Noita 研究"
-      description="魔杖参数、炼金反应、法术交互。先定义变量，再记录现象，最后才下结论。"
-      href="/research/wand-mechanics/"
-      meta="2 ENTRIES / 实验笔记"
-      icon="flask"
-    />
-    <HomeCard
-      index="03"
-      eyebrow="REFERENCE"
-      title="资料与工具"
-      description="法术、材料与版本差异的索引。为后续的数据查询和交互工具预留位置。"
-      href="/reference/spells/"
-      meta="INDEX BUILDING"
-      icon="wand"
-    />
-  </div>
+  <HomeCards />
 </section>
 
 <section class="home-section home-section--latest">
@@ -75,7 +47,11 @@ import RecentEntries from '../../components/RecentEntries.astro';
       <p class="home-eyebrow">LATEST / 最近归档</p>
       <h2>新近写入的条目</h2>
     </div>
-    <a class="home-inline-link" href="/start-here/">查看全部导览 <span aria-hidden="true">↗</span></a>
+    <p class="home-inline-links">
+      <a class="home-inline-link" href="/archive/">全部条目 <span aria-hidden="true">↗</span></a>
+      <a class="home-inline-link" href="/log/">日志 <span aria-hidden="true">↗</span></a>
+      <a class="home-inline-link" href="/start-here/">查看导览 <span aria-hidden="true">↗</span></a>
+    </p>
   </div>
 
   <RecentEntries />

@@ -553,6 +553,13 @@ site-search button[data-open-modal] kbd {
   margin-inline-start: 0.35rem;
 }
 
+.home-inline-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0;
+}
+
 .archive-note {
   display: flex;
   align-items: center;
