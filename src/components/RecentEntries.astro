@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import EntryList from './EntryList.astro';
+
+const SECTION_TAGS: Record<string, string> = {
+  modding: 'MODDING',
+  research: 'RESEARCH',
+  reference: 'REFERENCE',
+  log: 'LOG',
+};
+
+function toTime(value: string | undefined): number {
+  if (!value) return 0;
+  const time = Date.parse(`${value.replace(/\./g, '-')}T00:00:00`);
+  return Number.isNaN(time) ? 0 : time;
+}
+
+const entries = (await getCollection('docs'))
+  .filter((entry) => entry.data.status !== 'draft')
+  .filter((entry) => {
+    if (!entry.id || entry.id === '404') return false;
+    if (entry.id === 'log' || entry.id.startsWith('log/')) return false;
+    return true;
+  })
+  .sort((a, b) => toTime(b.data.updated) - toTime(a.data.updated))
+  .slice(0, 3)
+  .map((entry) => {
+    const section = entry.id.split('/')[0] ?? '';
+    return {
+      date: entry.data.updated ?? '',
+      title: entry.data.title,
+      description: entry.data.description ?? '',
+      href: `/${entry.id}/`,
+      tag: SECTION_TAGS[section] ?? 'ARCHIVE',
+    };
+  });
+---
+
+<EntryList entries={entries} />

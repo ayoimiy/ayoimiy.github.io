@@ -20,8 +20,7 @@ hero:
 ---
 
 import HomeCard from '../../components/HomeCard.astro';
-import EntryList from '../../components/EntryList.astro';
-import { latestEntries } from '../../data/home';
+import RecentEntries from '../../components/RecentEntries.astro';
 
 <div class="archive-strip">
   <span class="archive-strip__signal"><i></i> ARCHIVE ONLINE</span>
@@ -79,7 +78,7 @@ import { latestEntries } from '../../data/home';
     <a class="home-inline-link" href="/start-here/">查看全部导览 <span aria-hidden="true">↗</span></a>
   </div>
 
-  <EntryList entries={latestEntries} />
+  <RecentEntries />
 </section>
 
 <div class="archive-note">

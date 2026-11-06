@@ -27,7 +27,10 @@ export default defineConfig({
       sidebar: [
         {
           label: '开始',
-          items: [{ label: '知识库导览', slug: 'start-here' }],
+          items: [
+            { label: '知识库导览', slug: 'start-here' },
+            { label: '全部条目', link: '/archive/' },
+          ],
         },
         {
           label: '日志',

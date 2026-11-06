@@ -1,0 +1,147 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getCollection } from 'astro:content';
+
+const SECTION_LABELS: Record<string, string> = {
+  modding: 'Mod 制作',
+  research: 'Noita 研究',
+  reference: '资料库',
+  log: '日志',
+  _root: '站点',
+};
+
+const SECTION_ORDER = ['modding', 'research', 'reference', 'log', '_root'];
+
+function toTime(value: string | undefined): number {
+  if (!value) return 0;
+  const time = Date.parse(`${value.replace(/\./g, '-')}T00:00:00`);
+  return Number.isNaN(time) ? 0 : time;
+}
+
+const entries = (await getCollection('docs'))
+  .filter((entry) => entry.data.status !== 'draft')
+  .filter((entry) => entry.id !== '' && entry.id !== '404')
+  .sort((a, b) => toTime(b.data.updated) - toTime(a.data.updated));
+
+const groups = SECTION_ORDER.map((key) => ({
+  key,
+  label: SECTION_LABELS[key] ?? key,
+  items: entries.filter((entry) => {
+    if (key === '_root') return !entry.id.includes('/');
+    return entry.id === key || entry.id.startsWith(`${key}/`);
+  }),
+})).filter((group) => group.items.length > 0);
+
+const total = entries.length;
+---
+
+<StarlightPage
+  frontmatter={{
+    title: '全部条目',
+    description: '按分区列出所有页面，分区内按更新时间排序。',
+  }}
+>
+  <p class="archive-lead">
+    共 {total} 条。侧边栏只放索引页，找不到的页面可以来这里查。
+  </p>
+
+  {
+    groups.map((group) => (
+      <section class="archive-group">
+        <h2>{group.label}</h2>
+        <ul class="archive-list">
+          {group.items.map((item) => (
+            <li class="archive-item">
+              <a href={`/${item.id}/`} class="archive-link">
+                <span class="archive-date">{item.data.updated ?? '—'}</span>
+                <span class="archive-main">
+                  <span class="archive-title">{item.data.title}</span>
+                  <span class="archive-desc">{item.data.description ?? ''}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</StarlightPage>
+
+<style>
+  @layer starlight.components {
+    .archive-lead {
+      color: var(--sl-color-gray-2, #b9b09b);
+    }
+
+    .archive-group {
+      margin-top: 2.2rem;
+    }
+
+    .archive-group h2 {
+      font-family: var(--font-display, serif);
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+      color: var(--gold-bright, #f0d79c);
+      border-bottom: 1px solid var(--line, rgba(216, 181, 111, 0.18));
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .archive-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .archive-item {
+      border-bottom: 1px solid var(--line, rgba(216, 181, 111, 0.12));
+    }
+
+    .archive-link {
+      display: grid;
+      grid-template-columns: 6.5rem minmax(0, 1fr);
+      gap: 1rem;
+      padding: 0.75rem 0.2rem;
+      color: inherit;
+      text-decoration: none;
+      transition: background 160ms ease;
+    }
+
+    .archive-link:hover {
+      background: rgba(216, 181, 111, 0.04);
+    }
+
+    .archive-date {
+      font-family: 'Silkscreen', 'Courier New', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.06em;
+      color: var(--gold-dim, #8a713f);
+      padding-top: 0.25rem;
+    }
+
+    .archive-main {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      min-width: 0;
+    }
+
+    .archive-title {
+      font-size: 1rem;
+      color: var(--sl-color-white, #f3ebda);
+    }
+
+    .archive-desc {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--sl-color-gray-3, #8d8675);
+    }
+
+    @media (max-width: 40rem) {
+      .archive-link {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.2rem;
+      }
+    }
+  }
+</style>
