@@ -1,0 +1,124 @@
+---
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('docs'))
+  .filter((entry) => entry.data.kind === 'component')
+  .filter((entry) => entry.data.status !== 'draft')
+  .sort((a, b) => a.data.title.localeCompare(b.data.title, 'zh-CN'));
+
+const groups = new Map<string, typeof entries>();
+for (const entry of entries) {
+  const category = entry.data.category ?? '未分类';
+  const list = groups.get(category) ?? [];
+  list.push(entry);
+  groups.set(category, list);
+}
+
+const statusLabels: Record<string, string> = {
+  stable: '已归档',
+  wip: '整理中',
+  draft: '草稿',
+};
+---
+
+{
+  entries.length === 0 ? (
+    <p class="component-empty">还没有标记为组件的页面。在 frontmatter 里加 <code>kind: component</code> 即可收录。</p>
+  ) : (
+    [...groups.entries()].map(([category, items]) => (
+      <section class="component-group">
+        <h2>{category}</h2>
+        <ul class="component-list">
+          {items.map((item) => (
+            <li class="component-item">
+              <a class="component-link" href={`/${item.id}/`}>
+                <span class="component-name">{item.data.title}</span>
+                <span class="component-desc">{item.data.description ?? ''}</span>
+                <span class="component-status">{statusLabels[item.data.status] ?? '整理中'}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  )
+}
+
+<style>
+  @layer starlight.components {
+    .component-group {
+      margin-top: 2rem;
+    }
+
+    .component-group h2 {
+      font-family: var(--font-display, serif);
+      font-size: 1.05rem;
+      letter-spacing: 0.06em;
+      color: var(--gold-bright, #f0d79c);
+      border-bottom: 1px solid var(--line, rgba(216, 181, 111, 0.18));
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .component-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .component-item {
+      border-bottom: 1px solid var(--line, rgba(216, 181, 111, 0.12));
+    }
+
+    .component-link {
+      display: grid;
+      grid-template-columns: minmax(9rem, 14rem) minmax(0, 1fr) 4.5rem;
+      gap: 1rem;
+      align-items: baseline;
+      padding: 0.7rem 0.2rem;
+      color: inherit;
+      text-decoration: none;
+      transition: background 160ms ease;
+    }
+
+    .component-link:hover {
+      background: rgba(216, 181, 111, 0.04);
+    }
+
+    .component-name {
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.86rem;
+      color: var(--sl-color-white, #f3ebda);
+    }
+
+    .component-desc {
+      font-size: 0.84rem;
+      line-height: 1.6;
+      color: var(--sl-color-gray-3, #8d8675);
+    }
+
+    .component-status {
+      justify-self: end;
+      font-family: 'Silkscreen', 'Courier New', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 0.06em;
+      color: var(--gold-dim, #8a713f);
+      white-space: nowrap;
+    }
+
+    .component-empty {
+      color: var(--sl-color-gray-2, #b9b09b);
+    }
+
+    @media (max-width: 40rem) {
+      .component-link {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.2rem;
+      }
+
+      .component-status {
+        justify-self: start;
+      }
+    }
+  }
+</style>

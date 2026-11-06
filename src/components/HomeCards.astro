@@ -5,7 +5,6 @@ import HomeCard from './HomeCard.astro';
 const entries = (await getCollection('docs')).filter(
   (entry) => entry.data.status !== 'draft' && entry.id && entry.id !== '404',
 );
-
 const countIn = (prefix: string) =>
   entries.filter((entry) => entry.id === prefix.replace(/\/$/, '') || entry.id.startsWith(prefix)).length;
 

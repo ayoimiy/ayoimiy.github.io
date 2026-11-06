@@ -1,5 +1,8 @@
 ---
+import { getCollection } from 'astro:content';
+
 const data = Astro.locals.starlightRoute.entry.data;
+const id = Astro.locals.starlightRoute.entry.id ?? '';
 
 const status = data.status ?? 'wip';
 const statusLabel = {
@@ -9,9 +12,44 @@ const statusLabel = {
 }[status];
 
 const tags = Array.isArray(data.tags) ? data.tags : [];
+
+const SEGMENT_LABELS = {
+  modding: 'Mod 制作',
+  research: 'Noita 研究',
+  components: '组件研究',
+  log: '日志',
+  reference: '资料库',
+  yoita: 'Yoita',
+  lua_api: 'LuaAPI',
+};
+
+const segments = id.split('/').filter(Boolean);
+const knownIds = new Set((await getCollection('docs')).map((entry) => entry.id));
+const parents = segments.slice(0, -1).map((segment, index) => {
+  const path = segments.slice(0, index + 1).join('/');
+  return {
+    label: SEGMENT_LABELS[segment] ?? segment,
+    href: `/${path}/`,
+    exists: knownIds.has(path),
+  };
+});
 ---
 
 <header class="entry-heading">
+  {
+    parents.length > 0 && (
+      <nav class="entry-breadcrumb" aria-label="面包屑">
+        {parents.map((parent) => (
+          <span class="entry-breadcrumb__item">
+            {parent.exists ? <a href={parent.href}>{parent.label}</a> : <span>{parent.label}</span>}
+            <span class="entry-breadcrumb__sep" aria-hidden="true">›</span>
+          </span>
+        ))}
+        <span class="entry-breadcrumb__current">{data.title}</span>
+      </nav>
+    )
+  }
+
   <div class="entry-kicker">
     <span class="entry-kicker__label">ARCHIVE ENTRY</span>
     <span class="entry-kicker__rule" aria-hidden="true"></span>
@@ -41,6 +79,36 @@ const tags = Array.isArray(data.tags) ? data.tags : [];
   @layer starlight.components {
     .entry-heading {
       padding-top: clamp(1.5rem, 4vw, 3rem);
+    }
+
+    .entry-breadcrumb {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 1rem;
+      font-family: 'Silkscreen', 'Courier New', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      color: var(--sl-color-gray-3, #8d8675);
+    }
+
+    .entry-breadcrumb a {
+      color: var(--gold-dim, #8a713f);
+      text-decoration: none;
+    }
+
+    .entry-breadcrumb a:hover {
+      color: var(--gold-bright, #f0d79c);
+    }
+
+    .entry-breadcrumb__sep {
+      margin-inline: 0.45rem;
+      color: rgba(216, 181, 111, 0.35);
+    }
+
+    .entry-breadcrumb__current {
+      color: var(--sl-color-gray-2, #b9b09b);
     }
 
     .entry-kicker {

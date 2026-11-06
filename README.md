@@ -108,6 +108,11 @@ tags: [Mod, Lua]
 - `/archive/` 全部条目页：按分区列出所有页面，含未进侧边栏的内容；
 - `/log/` 日志频道：每月一个文件，按天记录；
 - 自定义 404 页面，并内嵌 Pagefind 搜索；
+- 组件索引从 frontmatter（`kind` / `category`）自动生成；
+- 文章页面包屑；
+- 正文图片点击放大（灯箱）；
+- `npm run check:links` 断链检查，并在 CI 中执行；
+- `npm run new` 按模板生成文章 / 组件 / 日志骨架；
 - 每页显示基于 Git 提交记录的最后更新时间；
 - 分享卡片图（`og:image`）与 `robots.txt`、sitemap；
 - 文章页自定义标题区，展示状态、版本与标签；

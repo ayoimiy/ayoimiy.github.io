@@ -4,6 +4,8 @@ description: 生物的生命值、伤害类型、窒息、火焰与死亡流程�
 status: wip
 updated: 2026.11.06
 gameVersion: 当前正式版
+kind: component
+category: 伤害与生命
 tags: [组件, 伤害, 生命]
 ---
 

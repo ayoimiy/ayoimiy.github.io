@@ -77,6 +77,14 @@ export default defineConfig({
           attrs: { name: 'theme-color', content: '#080a08' },
         },
         {
+          tag: 'link',
+          attrs: { rel: 'stylesheet', href: '/lightbox.css' },
+        },
+        {
+          tag: 'script',
+          attrs: { src: '/lightbox.js', defer: true },
+        },
+        {
           tag: 'meta',
           attrs: { property: 'og:image', content: 'https://ayoimiy.github.io/og.png' },
         },

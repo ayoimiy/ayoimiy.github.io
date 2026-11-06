@@ -1,9 +1,11 @@
 ---
 title: ParticleEmitterComponent
-description: 负责控制粒子？
+description: 负责控制粒子发射、粒子外观与发射行为。
 status: wip
 updated: 2026.10.21
 gameVersion: 当前正式版
+kind: component
+category: 粒子
 tags:
   - 组件
   - 粒子

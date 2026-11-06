@@ -28,6 +28,9 @@ jobs:
         with:
           node-version: 24
 
+      - name: Check internal links
+        run: npm run check:links
+
   deploy:
     needs: build
     runs-on: ubuntu-latest

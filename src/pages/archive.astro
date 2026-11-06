@@ -20,7 +20,7 @@ function toTime(value: string | undefined): number {
 
 const entries = (await getCollection('docs'))
   .filter((entry) => entry.data.status !== 'draft')
-  .filter((entry) => entry.id !== '' && entry.id !== '404')
+  .filter((entry) => entry.id !== '' && entry.id !== 'index' && entry.id !== '404')
   .sort((a, b) => toTime(b.data.updated) - toTime(a.data.updated));
 
 const groups = SECTION_ORDER.map((key) => ({
