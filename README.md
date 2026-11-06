@@ -21,7 +21,7 @@
 | 搜索 | Pagefind（构建时生成） |
 | 样式 | 原生 CSS + Starlight CSS 变量 |
 | 包管理 | npm |
-| 部署目标 | GitHub Pages（尚未接入） |
+| 部署目标 | GitHub Pages（`https://ayoimiy.github.io`） |
 
 ## 本地运行
 
@@ -41,6 +41,27 @@ npm run check
 npm run build
 npm run preview
 ```
+
+## 部署到 GitHub Pages
+
+站点目标地址是 `https://ayoimiy.github.io`，对应**用户主页仓库** `ayoimiy.github.io`。因为部署在根路径，站内的 `/research/...` 这类链接不需要改。
+
+首次发布：
+
+1. 在 GitHub 新建仓库，名字必须是 **`ayoimiy.github.io`**，选 Public，不要勾选初始化 README。
+2. 关联远程并推送：
+
+   ```bash
+   git remote add origin https://github.com/ayoimiy/ayoimiy.github.io.git
+   git push -u origin main
+   ```
+
+3. 打开仓库 **Settings → Pages → Build and deployment**，把 Source 设为 **GitHub Actions**。
+4. 回到 **Actions** 页，等 `Deploy to GitHub Pages` 跑完，站点就在 `https://ayoimiy.github.io/`。
+
+之后每次 `git push` 到 `main`，工作流会自动构建并发布。工作流定义在 [.github/workflows/deploy.yml](.github/workflows/deploy.yml)。
+
+> 如果以后改用普通项目仓库（`ayoimiy.github.io/noita-archive/` 这种子路径），需要设置 `base` 并处理站内根路径链接；现在这种用户主页仓库不需要。
 
 ## 目录结构
 
@@ -103,15 +124,16 @@ tags: [Mod, Lua]
 
 ## 尚未完成
 
-- [ ] 接入 GitHub 仓库与 GitHub Pages；
-- [ ] 设置正式 `site` URL、项目页 base path 与自定义域名（如需要）；
+- [x] 设置正式 `site` URL（`https://ayoimiy.github.io`）并接入 GitHub Actions 工作流；
+- [ ] 在 GitHub 创建 `ayoimiy.github.io` 仓库并首次推送（见上文“部署到 GitHub Pages”）；
 - [ ] 确定内容许可证、转载规则与素材使用边界；
 - [ ] 补齐真实文章、版本号与实验数据；
 - [ ] 决定评论、统计和贡献流程；
+- [ ] 自定义域名（可选）；
 - [ ] 压缩并整理预览截图（`preview/` 仅用于本地验收）。
 
 ## 发布前注意
 
-当前 Markdown 中的站内链接使用根路径（例如 `/modding/getting-started/`）。如果最终部署在 GitHub 项目页的子路径下，需要统一设置 `base` 并检查这些链接，或改用自定义域名部署在根路径。
+站点部署在用户主页根路径（`https://ayoimiy.github.io/`），所以 Markdown 里的根路径链接（例如 `/modding/getting-started/`）可以直接用。**如果以后改成项目仓库部署（子路径），这些链接会失效**，需要设置 `base` 并统一处理，或者改用自定义域名。
 
 Noita 的名称与游戏内容归 Nolla Games 所有。本站是非官方粉丝项目；公开部署前应确认所引用 Wiki、代码、图片与 Mod 素材的许可。

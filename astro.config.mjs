@@ -4,6 +4,7 @@ import { satteri } from '@astrojs/markdown-satteri';
 import wrapTables from './src/plugins/wrap-tables.mjs';
 
 export default defineConfig({
+  site: 'https://ayoimiy.github.io',
   markdown: {
     processor: satteri({
       hastPlugins: [wrapTables],
