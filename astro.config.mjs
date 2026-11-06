@@ -30,11 +30,16 @@ export default defineConfig({
           items: [{ label: '知识库导览', slug: 'start-here' }],
         },
         {
+          label: '日志',
+          link: '/log/',
+        },
+        {
           label: 'Mod 制作',
           items: [
             { label: '开发环境与项目骨架', slug: 'modding/getting-started' },
             { label: 'Lua 脚本入门', slug: 'modding/lua-basics' },
-            { label: 'Yoita项目' , slug: 'research/yoita'}
+            { label: 'Yoita项目' , slug: 'research/yoita'},
+            { label: 'LuaAPI' , slug: 'research/lua_api'},
           ],
         },
         {

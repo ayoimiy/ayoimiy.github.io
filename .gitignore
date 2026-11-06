@@ -14,3 +14,7 @@ Thumbs.db
 # Obsidian 配置与回收站
 .obsidian/
 .trash/
+
+# 本地参考资料（游戏资源、API 导出等，体积大，不进仓库）
+Noita部分资源文件/
+
