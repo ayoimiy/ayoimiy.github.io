@@ -44,22 +44,14 @@ npm run preview
 
 ## 部署到 GitHub Pages
 
-站点目标地址是 `https://ayoimiy.github.io`，对应**用户主页仓库** `ayoimiy.github.io`。因为部署在根路径，站内的 `/research/...` 这类链接不需要改。
+站点已上线：**https://ayoimiy.github.io/**，对应用户主页仓库 `ayoimiy.github.io`。部署在根路径，站内的 `/research/...` 这类链接不需要改。
 
-首次发布：
+之后每次 `git push` 到 `main`，[部署工作流](.github/workflows/deploy.yml) 会自动构建并发布（约 1 分钟）。
 
-1. 在 GitHub 新建仓库，名字必须是 **`ayoimiy.github.io`**，选 Public，不要勾选初始化 README。
-2. 关联远程并推送：
+需要保持的设置：
 
-   ```bash
-   git remote add origin https://github.com/ayoimiy/ayoimiy.github.io.git
-   git push -u origin main
-   ```
-
-3. 打开仓库 **Settings → Pages → Build and deployment**，把 Source 设为 **GitHub Actions**。
-4. 回到 **Actions** 页，等 `Deploy to GitHub Pages` 跑完，站点就在 `https://ayoimiy.github.io/`。
-
-之后每次 `git push` 到 `main`，工作流会自动构建并发布。工作流定义在 [.github/workflows/deploy.yml](.github/workflows/deploy.yml)。
+- 仓库 **Settings → Pages → Source** 必须是 **GitHub Actions**
+- 旧 Jekyll 博客的内容保存在远端 `legacy-jekyll` 分支，未删除
 
 > 如果以后改用普通项目仓库（`ayoimiy.github.io/noita-archive/` 这种子路径），需要设置 `base` 并处理站内根路径链接；现在这种用户主页仓库不需要。
 
@@ -125,7 +117,8 @@ tags: [Mod, Lua]
 ## 尚未完成
 
 - [x] 设置正式 `site` URL（`https://ayoimiy.github.io`）并接入 GitHub Actions 工作流；
-- [ ] 在 GitHub 创建 `ayoimiy.github.io` 仓库并首次推送（见上文“部署到 GitHub Pages”）；
+- [x] 在 GitHub 创建 `ayoimiy.github.io` 仓库、首次发布并接管根地址；
+- [x] 迁入旧博客的 4 篇文章；
 - [ ] 确定内容许可证、转载规则与素材使用边界；
 - [ ] 补齐真实文章、版本号与实验数据；
 - [ ] 决定评论、统计和贡献流程；
