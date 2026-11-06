@@ -51,9 +51,9 @@ npm run preview
 │  ├─ assets/                # 站点插画与标志
 │  ├─ components/            # 首页卡片、文章标题、主题提供器
 │  ├─ content/
-│  │  ├─ docs/               # 知识库正文
+│  │  ├─ docs/               # 知识库正文（含 log/ 日志）
 │  │  └─ i18n/               # 搜索 UI 等中文文案
-│  ├─ data/                  # 首页最近条目等结构化数据
+│  ├─ pages/                 # 站点级页面（如 /archive/ 全部条目）
 │  ├─ plugins/               # Markdown / HTML AST 转换插件
 │  ├─ styles/custom.css      # Noita 主题与排版
 │  └─ content.config.ts      # 内容集合与 frontmatter schema
@@ -90,6 +90,10 @@ tags: [Mod, Lua]
 
 - 暗色默认主题，保留浅色“羊皮纸”主题切换；
 - 首页自定义 hero、卡片、最近条目与归档格言；
+- 首页“最近归档”和卡片条目数从内容集合自动统计，按 `updated` 排序；
+- `/archive/` 全部条目页：按分区列出所有页面，含未进侧边栏的内容；
+- `/log/` 日志频道：每月一个文件，按天记录；
+- 自定义 404 页面；
 - 文章页自定义标题区，展示状态、版本与标签；
 - 文章标题、表格、引用、代码块与提示框的统一样式；
 - Markdown 表格默认铺满正文宽度，超宽表格在表格容器内横向滚动；
