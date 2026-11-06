@@ -1,5 +1,5 @@
 ---
-title: ParticelEmitterComponent
+title: ParticleEmitterComponent
 description: 负责控制粒子？
 status: wip
 updated: 2026.10.21

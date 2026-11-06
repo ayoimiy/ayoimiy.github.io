@@ -1,6 +1,6 @@
 ---
 title: 组件研究
-description: Noita组件爱你的属性、行为与实验记录索引
+description: Noita 组件的属性、行为与实验记录索引
 status: wip
 updated: 2026.11.01
 gameVersion: 当前正式版
